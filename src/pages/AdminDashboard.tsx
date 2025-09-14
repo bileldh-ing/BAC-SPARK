@@ -34,7 +34,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginForm.email === 'admin@admin.com' && loginForm.password === 'admin2025++') {
+    if (loginForm.email === 'adminisraabelhadjali2006@gmail.com' && loginForm.password === 'admin2025++') {
       setIsLoggedIn(true);
       toast({
         title: "Connexion réussie",
@@ -121,12 +121,6 @@ const AdminDashboard: React.FC = () => {
                 Se connecter
               </Button>
             </form>
-            
-            <div className="mt-6 p-4 bg-muted/20 rounded-lg text-sm">
-              <p className="font-medium mb-2">Credentials de test :</p>
-              <p>Email: admin@admin.com</p>
-              <p>Password: admin2025++</p>
-            </div>
           </CardContent>
         </Card>
       </div>

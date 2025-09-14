@@ -72,6 +72,16 @@ const BAC_TYPES: BACType[] = [
   }
 ];
 
+// Generate random 4-character suffix
+const generateRandomSuffix = (): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < 4; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
 // Generate 100 codes for each BAC type
 const generateCodes = (): Code[] => {
   const codes: Code[] = [];
@@ -79,7 +89,7 @@ const generateCodes = (): Code[] => {
     for (let i = 1; i <= 100; i++) {
       codes.push({
         id: `${bac.id}_${i}`,
-        code: `${bac.id.toUpperCase()}${String(i).padStart(3, '0')}`,
+        code: `${bac.id.toUpperCase()}${String(i).padStart(3, '0')}${generateRandomSuffix()}`,
         bacType: bac.id,
         used: false
       });

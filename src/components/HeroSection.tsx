@@ -5,6 +5,7 @@ import { SparklesIcon, PlayIcon } from 'lucide-react';
 import BlurText from '@/components/animations/BlurText';
 import RotatingText from '@/components/animations/RotatingText';
 import Prism from '@/components/animations/Prism';
+import bacSparkLogo from '@/assets/bac-spark-logo.png';
 
 interface HeroSectionProps {
   onGetStarted: () => void;
@@ -29,7 +30,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
             frameBorder='0' 
             width='100%' 
             height='100%'
-            style={{ border: 'none' }}
+            style={{ border: 'none', transform: 'scale(1.2)' }}
           />
         </div>
         
@@ -68,9 +69,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex items-center justify-center gap-3 mb-6"
             >
-              <div className="p-4 rounded-2xl bg-gradient-orange glow-orange">
-                <SparklesIcon className="w-12 h-12 text-primary-foreground" />
-              </div>
+              <img 
+                src={bacSparkLogo} 
+                alt="BAC SPARK Logo" 
+                className="w-20 h-20 logo-glow"
+              />
             </motion.div>
             
             <BlurText
@@ -84,10 +87,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
           
           {/* Dynamic Subtitle */}
           <div className="space-y-6">
-            <div className="text-xl md:text-2xl text-foreground/90">
+            <div className="text-2xl md:text-3xl text-foreground/90 font-bold">
               <RotatingText
                 texts={dynamicPhrases}
-                mainClassName="justify-center items-center min-h-[2.5rem]"
+                mainClassName="justify-center items-center min-h-[3rem]"
                 staggerFrom="center"
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

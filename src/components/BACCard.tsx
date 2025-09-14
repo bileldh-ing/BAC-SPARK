@@ -2,7 +2,17 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LockIcon, UnlockIcon, ExternalLinkIcon } from 'lucide-react';
+import { 
+  LockIcon, 
+  UnlockIcon, 
+  ExternalLinkIcon,
+  CalculatorIcon,
+  FlaskConicalIcon,
+  CogIcon,
+  BookOpenIcon,
+  MonitorIcon,
+  TrendingUpIcon
+} from 'lucide-react';
 import { BACType } from '@/hooks/useBACSpark';
 
 interface BACCardProps {
@@ -13,6 +23,23 @@ interface BACCardProps {
 
 export const BACCard: React.FC<BACCardProps> = ({ bac, index, onAccessDocuments }) => {
   const isLocked = bac.status === 'locked';
+  
+  const getSubjectIcon = (bacId: string) => {
+    switch (bacId) {
+      case 'math': return <CalculatorIcon className="w-8 h-8" />;
+      case 'sciences': return <FlaskConicalIcon className="w-8 h-8" />;
+      case 'techniques': return <CogIcon className="w-8 h-8" />;
+      case 'lettres': return <BookOpenIcon className="w-8 h-8" />;
+      case 'informatique': return <MonitorIcon className="w-8 h-8" />;
+      case 'economie': return <TrendingUpIcon className="w-8 h-8" />;
+      default: return <UnlockIcon className="w-8 h-8" />;
+    }
+  };
+
+  const getCardClassName = (bacId: string, isLocked: boolean) => {
+    if (isLocked) return 'bac-card-locked';
+    return `bac-card-${bacId}`;
+  };
   
   return (
     <motion.div
@@ -26,7 +53,7 @@ export const BACCard: React.FC<BACCardProps> = ({ bac, index, onAccessDocuments 
       whileHover={!isLocked ? { scale: 1.05 } : {}}
       className="group"
     >
-      <Card className={isLocked ? 'bac-card-locked' : 'bac-card-active'}>
+      <Card className={getCardClassName(bac.id, isLocked)}>
         <CardContent className="p-8 text-center space-y-6">
           {/* Icon */}
           <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-current/10 to-current/5 
@@ -34,7 +61,7 @@ export const BACCard: React.FC<BACCardProps> = ({ bac, index, onAccessDocuments 
             {isLocked ? (
               <LockIcon className="w-8 h-8" />
             ) : (
-              <UnlockIcon className="w-8 h-8 text-accent animate-pulse" />
+              getSubjectIcon(bac.id)
             )}
           </div>
           

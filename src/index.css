@@ -39,12 +39,26 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Custom BAC SPARK tokens */
-    --orange-primary: 25 95% 60%;
-    --orange-glow: 25 95% 70%;
-    --orange-muted: 25 80% 50%;
-    --dark-surface: 0 0% 12%;
-    --dark-elevated: 0 0% 16%;
+    /* Additional colors for special effects */
+    --accent-glow: 215 100% 60%;
+    --border-glow: var(--accent);
+    
+    /* Orange gradient */
+    --orange-primary: 25 100% 50%;
+    --orange-secondary: 35 100% 60%;
+    --gradient-orange: linear-gradient(135deg, hsl(var(--orange-primary)), hsl(var(--orange-secondary)));
+    
+    /* BAC Subject Colors */
+    --math-primary: 45 100% 60%;        /* Yellow */
+    --sciences-primary: 330 100% 70%;   /* Rose/Pink */
+    --technique-primary: 270 100% 70%;  /* Violet */
+    --lettres-primary: 220 100% 65%;    /* Blue */
+    --informatique-primary: 0 0% 50%;   /* Grey */
+    --economie-primary: 120 100% 40%;   /* Green */
+    
+    /* Dark surface variations */
+    --dark-surface: 210 11% 8%;
+    --dark-surface-soft: 210 11% 12%;
     --hero-overlay: 0 0% 0%;
 
     /* Gradients */
@@ -114,18 +128,52 @@ All colors MUST be HSL.
            transition-all duration-300 ease-out;
   }
   
-  /* BAC Card Variants */
+  /* Cards */
   .bac-card-locked {
-    @apply bg-muted border border-border text-muted-foreground 
-           rounded-2xl p-6 cursor-not-allowed opacity-50;
+    @apply bg-muted/20 border border-border/30 rounded-2xl transition-all duration-300 opacity-60;
   }
   
   .bac-card-active {
-    @apply bg-gradient-to-br from-accent/10 to-accent/5 
-           border-2 border-accent text-accent-foreground 
-           rounded-2xl p-6 cursor-pointer 
-           hover:shadow-shadow-orange hover:scale-105 
-           transition-all duration-300 ease-out;
+    @apply bg-gradient-to-br from-orange-primary/10 to-orange-secondary/5 
+           border border-orange-primary/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-orange-primary/20 hover:shadow-orange-primary/30;
+  }
+
+  /* BAC Subject Card Colors */
+  .bac-card-math {
+    @apply bg-gradient-to-br from-yellow-500/10 to-yellow-400/5 
+           border border-yellow-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/30;
+  }
+  
+  .bac-card-sciences {
+    @apply bg-gradient-to-br from-pink-500/10 to-pink-400/5 
+           border border-pink-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-pink-500/20 hover:shadow-pink-500/30;
+  }
+  
+  .bac-card-techniques {
+    @apply bg-gradient-to-br from-purple-500/10 to-purple-400/5 
+           border border-purple-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30;
+  }
+  
+  .bac-card-lettres {
+    @apply bg-gradient-to-br from-blue-500/10 to-blue-400/5 
+           border border-blue-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30;
+  }
+  
+  .bac-card-informatique {
+    @apply bg-gradient-to-br from-gray-500/10 to-gray-400/5 
+           border border-gray-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-gray-500/20 hover:shadow-gray-500/30;
+  }
+  
+  .bac-card-economie {
+    @apply bg-gradient-to-br from-green-500/10 to-green-400/5 
+           border border-green-500/30 rounded-2xl transition-all duration-300
+           shadow-lg shadow-green-500/20 hover:shadow-green-500/30;
   }
   
   /* Glass Effect */
@@ -133,9 +181,27 @@ All colors MUST be HSL.
     @apply backdrop-blur-lg bg-card/80 border border-border/50;
   }
   
-  /* Glow Effect */
+  /* Glow animations */
   .glow-orange {
-    @apply shadow-shadow-glow;
+    @apply shadow-lg shadow-orange-primary/40;
+  }
+  
+  .logo-glow {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+    transition: filter 0.3s ease;
+  }
+  
+  .logo-glow:hover {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--orange-primary) / 0.3); }
+    50% { box-shadow: 0 0 30px hsl(var(--orange-primary) / 0.5); }
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
   }
   
   /* Hero Overlay */

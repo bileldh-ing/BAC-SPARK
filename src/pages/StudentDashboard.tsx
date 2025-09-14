@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { HeroSection } from '@/components/HeroSection';
 import { BACCard } from '@/components/BACCard';
 import { CodeInputDialog } from '@/components/CodeInputDialog';
+import { ContactSection } from '@/components/ContactSection';
 import { useBACSpark } from '@/hooks/useBACSpark';
 import { CheckIcon, ShieldCheckIcon, ClockIcon, UsersIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -150,6 +151,9 @@ const StudentDashboard: React.FC = () => {
           </div>
         </div>
       </section>
+      
+      {/* Contact Section */}
+      <ContactSection />
       
       {/* Footer */}
       <footer className="py-16 px-4 border-t border-border/20">
