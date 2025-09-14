@@ -57,6 +57,27 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // BAC SPARK Custom Colors
+        "orange-primary": "hsl(var(--orange-primary))",
+        "orange-glow": "hsl(var(--orange-glow))",
+        "orange-muted": "hsl(var(--orange-muted))",
+        "dark-surface": "hsl(var(--dark-surface))",
+        "dark-elevated": "hsl(var(--dark-elevated))",
+        "hero-overlay": "hsl(var(--hero-overlay))",
+      },
+      backgroundImage: {
+        "gradient-orange": "var(--gradient-orange)",
+        "gradient-dark": "var(--gradient-dark)",
+        "gradient-hero": "var(--gradient-hero)",
+      },
+      boxShadow: {
+        "shadow-orange": "var(--shadow-orange)",
+        "shadow-card": "var(--shadow-card)",
+        "shadow-glow": "var(--shadow-glow)",
+      },
+      transitionTimingFunction: {
+        "smooth": "var(--transition-smooth)",
+        "bounce": "var(--transition-bounce)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +101,53 @@ export default {
             height: "0",
           },
         },
+        "fadeInUp": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(30px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "bounceIn": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0.3)",
+          },
+          "50%": {
+            transform: "scale(1.05)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
+        "glowPulse": {
+          "0%": {
+            boxShadow: "0 0 20px hsl(var(--orange-primary) / 0.3)",
+          },
+          "100%": {
+            boxShadow: "0 0 40px hsl(var(--orange-primary) / 0.6)",
+          },
+        },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-10px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in-up": "fadeInUp 0.6s ease-out",
+        "bounce-in": "bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        "glow-pulse": "glowPulse 2s ease-in-out infinite alternate",
+        "float": "float 3s ease-in-out infinite",
       },
     },
   },
