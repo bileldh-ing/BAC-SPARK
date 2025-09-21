@@ -13,8 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useBACSpark } from '@/hooks/useBACSpark';
+import { useBACSpark } from '@/contexts/BACSparkContext';
 import { useToast } from '@/hooks/use-toast';
+import Prism from '@/components/animations/Prism';
 import {
   LockIcon,
   CopyIcon,
@@ -29,6 +30,8 @@ const AdminDashboard: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [currentPage, setCurrentPage] = useState<{ [key: string]: number }>({});
+  const [itemsPerPage] = useState(20);
   const { codes, usedCodes, getAvailableCodes, markCodeAsUsed, copyCodeToClipboard } = useBACSpark();
   const { toast } = useToast();
 
@@ -65,6 +68,25 @@ const AdminDashboard: React.FC = () => {
     });
   };
 
+  const getCurrentPage = (bacType: string) => {
+    return currentPage[bacType] || 1;
+  };
+
+  const setCurrentPageForBac = (bacType: string, page: number) => {
+    setCurrentPage(prev => ({ ...prev, [bacType]: page }));
+  };
+
+  const getPaginatedCodes = (bacCodes: any[], bacType: string) => {
+    const page = getCurrentPage(bacType);
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return bacCodes.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = (bacCodes: any[]) => {
+    return Math.ceil(bacCodes.length / itemsPerPage);
+  };
+
   const bacTypes = [
     { id: 'math', name: 'Mathématiques', color: 'bg-blue-500' },
     { id: 'sciences', name: 'Sciences Expérimentales', color: 'bg-green-500' },
@@ -76,8 +98,22 @@ const AdminDashboard: React.FC = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-md glass-effect">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Prism Background */}
+        <div className="absolute inset-0 w-full h-full opacity-15">
+          <Prism
+            animationType="rotate"
+            timeScale={0.5}
+            height={3.5}
+            baseWidth={5.5}
+            scale={3.6}
+            hueShift={0}
+            colorFrequency={1}
+            noise={0.5}
+            glow={1}
+          />
+        </div>
+        <Card className="w-full max-w-md glass-effect relative z-10">
           <CardHeader className="text-center">
             <div className="mx-auto w-16 h-16 rounded-full bg-gradient-orange flex items-center justify-center mb-4">
               <ShieldIcon className="w-8 h-8 text-primary-foreground" />
@@ -128,8 +164,22 @@ const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="container mx-auto">
+    <div className="min-h-screen bg-background p-4 relative overflow-hidden">
+      {/* Prism Background */}
+      <div className="absolute inset-0 w-full h-full opacity-10">
+        <Prism
+          animationType="rotate"
+          timeScale={0.5}
+          height={3.5}
+          baseWidth={5.5}
+          scale={3.6}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0.5}
+          glow={1}
+        />
+      </div>
+      <div className="container mx-auto relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -145,6 +195,8 @@ const AdminDashboard: React.FC = () => {
           </Button>
         </div>
 
+
+
         <Tabs defaultValue="available" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 bg-dark-elevated">
             <TabsTrigger value="available" className="data-[state=active]:bg-accent">
@@ -159,6 +211,10 @@ const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               {bacTypes.map(bac => {
                 const bacCodes = getAvailableCodes(bac.id);
+                const paginatedCodes = getPaginatedCodes(bacCodes, bac.id);
+                const totalPages = getTotalPages(bacCodes);
+                const currentPageNum = getCurrentPage(bac.id);
+
                 return (
                   <Card key={bac.id} className="glass-effect">
                     <CardHeader>
@@ -173,27 +229,27 @@ const AdminDashboard: React.FC = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                         <AnimatePresence>
-                          {bacCodes.slice(0, 12).map((code, index) => (
+                          {paginatedCodes.map((code, index) => (
                             <motion.div
                               key={code.id}
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
                               exit={{ opacity: 0, scale: 0.8, x: -100 }}
-                              transition={{ duration: 0.3, delay: index * 0.05 }}
-                              className="p-4 bg-dark-elevated rounded-lg border border-border/20"
+                              transition={{ duration: 0.2, delay: index * 0.02 }}
+                              className="p-3 bg-dark-elevated rounded-lg border border-border/20 hover:border-orange-primary/30 transition-colors"
                             >
                               <div className="flex items-center justify-between">
-                                <code className="font-mono text-accent font-semibold">
+                                <code className="font-mono text-accent font-semibold text-sm">
                                   {code.code}
                                 </code>
-                                <div className="flex gap-2">
+                                <div className="flex gap-1">
                                   <Button
                                     size="sm"
                                     variant="outline"
                                     onClick={() => handleCopyCode(code.code)}
-                                    className="h-8 w-8 p-0"
+                                    className="h-6 w-6 p-0"
                                   >
                                     <CopyIcon className="h-3 w-3" />
                                   </Button>
@@ -201,7 +257,7 @@ const AdminDashboard: React.FC = () => {
                                     size="sm"
                                     variant="destructive"
                                     onClick={() => handleMarkAsDone(code.id, code.code)}
-                                    className="h-8 w-8 p-0"
+                                    className="h-6 w-6 p-0"
                                   >
                                     <CheckIcon className="h-3 w-3" />
                                   </Button>
@@ -211,10 +267,49 @@ const AdminDashboard: React.FC = () => {
                           ))}
                         </AnimatePresence>
                       </div>
-                      {bacCodes.length > 12 && (
-                        <p className="text-sm text-muted-foreground mt-4 text-center">
-                          ... et {bacCodes.length - 12} autres codes
-                        </p>
+
+                      {/* Pagination */}
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-between mt-6">
+                          <div className="text-sm text-muted-foreground">
+                            Page {currentPageNum} sur {totalPages}
+                            ({((currentPageNum - 1) * itemsPerPage) + 1}-{Math.min(currentPageNum * itemsPerPage, bacCodes.length)} sur {bacCodes.length})
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setCurrentPageForBac(bac.id, Math.max(1, currentPageNum - 1))}
+                              disabled={currentPageNum === 1}
+                            >
+                              Précédent
+                            </Button>
+                            <div className="flex gap-1">
+                              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                const pageNum = Math.max(1, Math.min(totalPages - 4, currentPageNum - 2)) + i;
+                                return (
+                                  <Button
+                                    key={pageNum}
+                                    variant={pageNum === currentPageNum ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setCurrentPageForBac(bac.id, pageNum)}
+                                    className="w-8 h-8 p-0"
+                                  >
+                                    {pageNum}
+                                  </Button>
+                                );
+                              })}
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setCurrentPageForBac(bac.id, Math.min(totalPages, currentPageNum + 1))}
+                              disabled={currentPageNum === totalPages}
+                            >
+                              Suivant
+                            </Button>
+                          </div>
+                        </div>
                       )}
                     </CardContent>
                   </Card>

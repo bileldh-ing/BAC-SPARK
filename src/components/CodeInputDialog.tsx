@@ -28,22 +28,22 @@ export const CodeInputDialog: React.FC<CodeInputDialogProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!code.trim()) return;
-    
+
     setIsLoading(true);
     setError('');
-    
+
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 800));
-    
+
     const isValid = onCodeSubmit(code.trim());
-    
+
     if (isValid) {
       setCode('');
       onClose();
     } else {
       setError('Code invalide. Veuillez réessayer.');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -65,7 +65,7 @@ export const CodeInputDialog: React.FC<CodeInputDialogProps> = ({
             Entrez votre code d'accès
           </DialogTitle>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
           <div className="space-y-2">
             <div className="relative">
@@ -77,11 +77,11 @@ export const CodeInputDialog: React.FC<CodeInputDialogProps> = ({
                 className="text-center text-lg font-mono tracking-wider uppercase 
                          border-orange-primary/30 focus:border-orange-primary 
                          bg-dark-elevated/50"
-                maxLength={10}
+                maxLength={15}
               />
               <LockIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             </div>
-            
+
             <AnimatePresence>
               {error && (
                 <motion.p
@@ -95,7 +95,7 @@ export const CodeInputDialog: React.FC<CodeInputDialogProps> = ({
               )}
             </AnimatePresence>
           </div>
-          
+
           <Button
             type="submit"
             disabled={!code.trim() || isLoading}
@@ -126,7 +126,7 @@ export const CodeInputDialog: React.FC<CodeInputDialogProps> = ({
             </AnimatePresence>
           </Button>
         </form>
-        
+
         <div className="text-center text-sm text-muted-foreground">
           <p>Un code vous a été fourni lors de votre achat</p>
         </div>

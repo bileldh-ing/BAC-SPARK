@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import Prism from '@/components/animations/Prism';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -58,8 +59,22 @@ export const ContactSection: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 px-4 bg-dark-surface/20">
-      <div className="container mx-auto">
+    <section id="contact" className="py-24 px-4 bg-dark-surface/20 relative overflow-hidden">
+      {/* Prism Background */}
+      <div className="absolute inset-0 w-full h-full opacity-10">
+        <Prism
+          animationType="rotate"
+          timeScale={0.5}
+          height={3.5}
+          baseWidth={5.5}
+          scale={3.6}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0.5}
+          glow={1}
+        />
+      </div>
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +103,7 @@ export const ContactSection: React.FC = () => {
             <div>
               <h3 className="text-2xl font-bold mb-6">Nos coordonnées</h3>
               <p className="text-muted-foreground mb-8">
-                Notre équipe est là pour vous aider à réussir votre BAC. 
+                Notre équipe est là pour vous aider à réussir votre BAC.
                 N'hésitez pas à nous contacter pour toute question.
               </p>
             </div>

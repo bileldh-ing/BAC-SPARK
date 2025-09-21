@@ -5,6 +5,7 @@ import { SparklesIcon, PlayIcon } from 'lucide-react';
 import BlurText from '@/components/animations/BlurText';
 import RotatingText from '@/components/animations/RotatingText';
 import Prism from '@/components/animations/Prism';
+import TrueFocus from '@/components/animations/TrueFocus';
 import bacSparkLogo from '@/assets/bac-spark-logo.png';
 
 interface HeroSectionProps {
@@ -25,15 +26,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
       <div className="absolute inset-0">
         {/* Spline Iframe */}
         <div className="absolute inset-0 w-full h-full">
-          <iframe 
-            src='https://my.spline.design/miniroomremakecopyprogrammerroom-x6nd0Tu4q3XGzwTv5qLtMde4/' 
-            frameBorder='0' 
-            width='100%' 
+          <iframe
+            src='https://my.spline.design/miniroomremakecopyprogrammerroom-x6nd0Tu4q3XGzwTv5qLtMde4/'
+            frameBorder='0'
+            width='100%'
             height='100%'
             style={{ border: 'none', transform: 'scale(1.2)' }}
           />
         </div>
-        
+
         {/* Prism Animation Overlay */}
         <div className="absolute inset-0 w-full h-full opacity-30">
           <Prism
@@ -49,10 +50,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
           />
         </div>
       </div>
-      
+
       {/* Dark Overlay (30% transparency) */}
       <div className="hero-overlay" />
-      
+
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 text-center">
         <motion.div
@@ -69,22 +70,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex items-center justify-center gap-3 mb-6"
             >
-              <img 
-                src={bacSparkLogo} 
-                alt="BAC SPARK Logo" 
-                className="w-20 h-20 logo-glow"
+              <img
+                src={bacSparkLogo}
+                alt="BAC SPARK Logo"
+                className="w-32 h-32 logo-glow"
               />
             </motion.div>
-            
-            <BlurText
-              text="BAC SPARK"
-              delay={100}
-              animateBy="characters"
-              direction="top"
-              className="text-6xl md:text-8xl font-black bg-gradient-orange bg-clip-text text-transparent"
+
+            <TrueFocus
+              sentence="BAC SPARK"
+              manualMode={false}
+              blurAmount={5}
+              borderColor="orange"
+              animationDuration={2}
+              pauseBetweenAnimations={1}
+              className="mb-8"
             />
           </div>
-          
+
           {/* Dynamic Subtitle */}
           <div className="space-y-6">
             <div className="text-2xl md:text-3xl text-foreground/90 font-bold">
@@ -102,7 +105,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               />
             </div>
           </div>
-          
+
           {/* CTA Buttons */}
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -118,7 +121,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               <PlayIcon className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               Commencer maintenant
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
@@ -127,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               En savoir plus
             </Button>
           </motion.div>
-          
+
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -148,7 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
           </motion.div>
         </motion.div>
       </div>
-      
+
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

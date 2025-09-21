@@ -4,7 +4,9 @@ import { HeroSection } from '@/components/HeroSection';
 import { BACCard } from '@/components/BACCard';
 import { CodeInputDialog } from '@/components/CodeInputDialog';
 import { ContactSection } from '@/components/ContactSection';
-import { useBACSpark } from '@/hooks/useBACSpark';
+import Prism from '@/components/animations/Prism';
+import bacSparkLogo from '@/assets/bac-spark-logo.png';
+import { useBACSpark } from '@/contexts/BACSparkContext';
 import { CheckIcon, ShieldCheckIcon, ClockIcon, UsersIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -77,10 +79,25 @@ const StudentDashboard: React.FC = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <HeroSection onGetStarted={handleGetStarted} />
-      
+
+
       {/* Why Choose Us Section */}
       <section className="py-24 px-4 relative overflow-hidden">
-        <div className="container mx-auto">
+        {/* Prism Background */}
+        <div className="absolute inset-0 w-full h-full opacity-20">
+          <Prism
+            animationType="rotate"
+            timeScale={0.5}
+            height={3.5}
+            baseWidth={5.5}
+            scale={3.6}
+            hueShift={0}
+            colorFrequency={1}
+            noise={0.5}
+            glow={1}
+          />
+        </div>
+        <div className="container mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +110,7 @@ const StudentDashboard: React.FC = () => {
             </h2>
             <div className="w-24 h-1 bg-gradient-orange mx-auto rounded-full" />
           </motion.div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {whyChooseUsPoints.map((point, index) => (
               <motion.div
@@ -120,10 +137,24 @@ const StudentDashboard: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* BAC Cards Section */}
-      <section className="py-24 px-4 bg-dark-surface/30">
-        <div className="container mx-auto">
+      <section className="py-24 px-4 bg-dark-surface/30 relative overflow-hidden">
+        {/* Prism Background */}
+        <div className="absolute inset-0 w-full h-full opacity-15">
+          <Prism
+            animationType="rotate"
+            timeScale={0.5}
+            height={3.5}
+            baseWidth={5.5}
+            scale={3.6}
+            hueShift={0}
+            colorFrequency={1}
+            noise={0.5}
+            glow={1}
+          />
+        </div>
+        <div className="container mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -138,7 +169,7 @@ const StudentDashboard: React.FC = () => {
               Entrez votre code pour débloquer l'accès aux documents de votre filière
             </p>
           </motion.div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {bacTypes.map((bac, index) => (
               <BACCard
@@ -151,22 +182,24 @@ const StudentDashboard: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Contact Section */}
       <ContactSection />
-      
+
       {/* Footer */}
       <footer className="py-16 px-4 border-t border-border/20">
         <div className="container mx-auto">
           <div className="text-center space-y-8">
             {/* Logo */}
             <div className="flex items-center justify-center gap-3">
-              <div className="p-3 rounded-xl bg-gradient-orange">
-                <span className="text-2xl font-black text-primary-foreground">BS</span>
-              </div>
+              <img
+                src={bacSparkLogo}
+                alt="BAC SPARK Logo"
+                className="w-12 h-12 logo-glow"
+              />
               <span className="text-2xl font-bold">BAC SPARK</span>
             </div>
-            
+
             {/* Links */}
             <div className="flex flex-wrap justify-center gap-8 text-muted-foreground">
               {[
@@ -183,7 +216,7 @@ const StudentDashboard: React.FC = () => {
                 </a>
               ))}
             </div>
-            
+
             {/* Copyright */}
             <div className="pt-8 border-t border-border/10">
               <p className="text-muted-foreground">
@@ -193,7 +226,7 @@ const StudentDashboard: React.FC = () => {
           </div>
         </div>
       </footer>
-      
+
       {/* Code Input Dialog */}
       <CodeInputDialog
         isOpen={showCodeDialog}
