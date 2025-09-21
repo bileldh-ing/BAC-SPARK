@@ -44,12 +44,12 @@ export const ContactSection: React.FC = () => {
     {
       icon: <MailIcon className="w-6 h-6" />,
       title: "Email",
-      info: "contact@bacspark.com"
+      info: "israabelhadjali22@gmail.com"
     },
     {
       icon: <PhoneIcon className="w-6 h-6" />,
       title: "Téléphone",
-      info: "+216 XX XXX XXX"
+      info: "+216 94822488"
     },
     {
       icon: <MapPinIcon className="w-6 h-6" />,
